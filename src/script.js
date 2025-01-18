@@ -4,7 +4,7 @@ let colorIndex = 0;
 // Rotates through different colors.
 // Works on multiple dom elements at the same time, separately.
 function colorMe(event) {
-    const colors = ["text-yellow-500", "text-orange-500", "text-red-500", "text-pink-500", "text-purple-600", "text-teal-500", "text-emerald-500"];
+    const colors = ["!text-yellow-500", "!text-orange-500", "!text-red-500", "!text-pink-500", "!text-purple-600", "!text-teal-500", "!text-emerald-500"];
     
     const element = event.target;
 
