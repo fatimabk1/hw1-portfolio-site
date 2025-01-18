@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="output.css" rel="stylesheet">
+    <title>Projects</title>
+</head>
+<body class="mx-auto max-w-2xl bg-blue-300 text-gray-800 font-sans leading-relaxed max-w-screen-md place-tracking-wide p-6 mx-4 my-4">
+    <header class="text-center py-8">
+        <h1 class="text-5xl font-bold max-w-screen-md mx-auto text-white mx-10">Featured Project</h1>
+    </header>
+
+    <section class="mb-12 ">
+        <h2 class="item-title text-2xl text-white">MemoNest: A Nested Voice Memo App for iOS</h2>
+        <p class="item-description mb-4">
+            Voice recording software is a versatile tool used for a wide range of purposes from personal diaries and notes to recordings of lectures. Despite the variety of powerful features offered by existing apps, such as transcription and enhanced search, many neglect a simple but strongly desired feature: nested organization. Existing solutions either do not offer organizing capabilities, requiring users to manually search or scroll through a long list, or only offer a single level of folders.
+        </p>
+        <p class="item-description mb-4">
+            MemoNest seeks to improve user experience by providing capability for nested organization. Users will be able to create groupings and sub-groupings for their recordings, making it easier for users to organize and find their recordings. The scope of this project will focus on these key features:
+        </p>
+        
+        <ul class="list-style ">
+            <li>Creating recordings (start, stop, automatic save to local database)</li>
+            <li>Playing recordings (play, pause, seek)</li>
+            <li>Managing audio (delete, rename)</li>
+            <li>Organizing recordings (create folders, rename folders, sort items in a folder, move recordings between folders, move folders between folders)</li>
+        </ul>
+
+        <p class="item-description mt-4">
+            <strong>Key Technologies:</strong> Swift, SwiftUI, Realm, XCTest, AVAudioPlayer, and AVAudioRecorder.
+        </p>
+    </section>
+
+    <!-- Key Design Decisions Section -->
+    <section>
+        <h1 class="section-title text-left text-4xl">Key Design Decisions</h1>
+
+        <!-- Individual Design Decisions -->
+        <div class="mt-6">
+            <h2 class="item-title ">Separate Services for Recording and Playback</h2>
+            <p class="mt-2 item-description">
+                I chose to design a streamlined, single page interface for recording and playback. The main view model owns the <i>RecordingService</i> and <i>PlaybackService</i>. The view model subscribes to state updates via Combine, driving the UI to reflect recording and playback states in real-time. Creating separate services makes the code more modular in case I want to reuse these functionalities in the future. The use of Combine reduces the complexity of handling state changes.
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="item-title ">Single Page UI for Navigation</h2>
+            <p class="mt-2 item-description">
+                Navigating through many nested folders could potentially lead to a stack overflow by stacking multiple screens. Updating the displayed folder within a single page UI prevents the screen stack from growing too large, thus avoiding stack overflow issues. Using a single page UI for navigation enhances performance and reliability, especially with deep folder structures, while keeping the navigation flow straightforward.
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="item-title ">Dependency Injection with DataManager Protocol</h2>
+            <p class="mt-2 item-description">
+                I wanted to be able to easily swap between the mock database for testing and the Realm database when used in production. Implementing dependency injection by creating Realm and mock databases conforming to a <i>DataManager</i> protocol (Strategy Pattern) allows easy swapping of database implementations. This makes the app more testable, since switching between real and mock databases only requires changing one line of code.
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="item-title ">Data Mapper Pattern for Object-Database Separation</h2>
+            <p class="mt-2 item-description">
+                I wanted to clearly separate the domain logic from the database representation. Using the Data Mapper Pattern to create a layer of abstraction between code and database isolates mapping logic, allowing flexibility to swap the database layer without changing object representation throughout the code. This improves maintainability and flexibility, making future database migrations or changes less disruptive.
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="item-title ">BFS Folder Deletion with Combine</h2>
+            <p class="mt-2 item-description">
+                MemoNest supports nested folders, so deleting folders efficiently and without data integrity issues was a major concern. Implementing BFS folder deletion with Combine, where items are structured to save the ID of their parent folder (rather than references), allows safe deletion without damaging data integrity. Items are displayed by searching for all items with a parentID of the current folder. This ensures data integrity and improves the performance of folder deletion and item display operations.
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="item-title ">Unified Item Protocol for Files and Folders</h2>
+            <p class="mt-2 item-description">
+                The view needed to display files and folders interchangeably. Having both files and folders conform to the <i>Item</i> protocol allows the view to handle them uniformly without needing to know their exact types (Composite Pattern). This simplified the UI code considerably.
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>

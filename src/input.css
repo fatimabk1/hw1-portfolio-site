@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .section-title {
+        @apply text-2xl text-center font-semibold mb-3 text-white;
+    }
+    .item-title {
+        @apply text-lg text-left font-semibold mb-3 text-gray-700;
+    }
+    .item-description {
+        @apply text-lg text-left leading-relaxed  mx-auto text-gray-700;
+    }
+    .list-style {
+        @apply space-y-2 list-disc list-inside text-gray-700;
+    }
+    .italic-date {
+        @apply italic mb-3;
+    }
+};
